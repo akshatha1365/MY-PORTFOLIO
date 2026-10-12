@@ -1,0 +1,92 @@
+{
+  "info": {
+    "id": "ses_edabec49bffeUFCHoECKTSC3je",
+    "projectID": "6516f0cf0ad270a4b52f5ff99f96f41c6e1123e1",
+    "agent": "build",
+    "model": {
+      "id": "exo-free",
+      "providerID": "opencode",
+      "variant": "default"
+    },
+    "cost": 0,
+    "tokens": {
+      "input": 0,
+      "output": 0,
+      "reasoning": 0,
+      "cache": {
+        "read": 0,
+        "write": 0
+      }
+    },
+    "outcome": "failed",
+    "time": {
+      "created": 1791626394533,
+      "updated": 1791646858263,
+      "idle": 1791626396020
+    },
+    "permissions": [
+      {
+        "action": "browser",
+        "resource": "*",
+        "effect": "allow"
+      }
+    ],
+    "location": {
+      "directory": "C:\\Users\\Rakesh\\Documents\\Default Project"
+    }
+  },
+  "messages": [
+    {
+      "id": "msg_125413b63001nBrpuuLbXiDFH0",
+      "metadata": {
+        "displayText": "how does this open code work",
+        "comments": [],
+        "attachments": [],
+        "agent": "build",
+        "model": {
+          "modelID": "exo-free",
+          "providerID": "opencode"
+        }
+      },
+      "time": {
+        "created": 1791626394854
+      },
+      "text": "how does this open code work",
+      "files": [],
+      "agents": [],
+      "type": "user"
+    },
+    {
+      "id": "msg_125413cfe001VhDOGLxB0gmwov",
+      "time": {
+        "created": 1791626394902,
+        "completed": 1791626396013
+      },
+      "type": "assistant",
+      "agent": "build",
+      "model": {
+        "id": "exo-free",
+        "providerID": "opencode",
+        "variant": "default"
+      },
+      "content": [],
+      "finish": "error",
+      "error": {
+        "type": "provider.invalid-request",
+        "message": "Model exo-free has been deprecated.",
+        "status": 410,
+        "response": {
+          "body": "{\"type\":\"error\",\"error\":{\"type\":\"ModelDeprecated\",\"message\":\"Model exo-free has been deprecated.\"},\"metadata\":{\"model\":\"exo-free\"}}"
+        }
+      }
+    },
+    {
+      "id": "msg_125414174001zrJqkcqtINMbmM",
+      "time": {
+        "created": 1791626396020
+      },
+      "type": "idle",
+      "outcome": "failed"
+    }
+  ]
+}
