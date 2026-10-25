@@ -2,84 +2,130 @@ export type PortfolioProject = {
   title: string;
   description: string;
   technologies: string[];
-  href?: string;
+  image?: string;
+  githubHref?: string;
+  demoHref?: string;
+  status?: "In Progress" | "Completed";
+};
+
+export type PortfolioCertification = {
+  title?: string;
+  issuer: string;
+  completedAt?: string;
+  image?: string;
+  certificateUrl?: string;
+  credentialUrl?: string;
 };
 
 export const portfolio = {
   name: "Akshatha Kulkarni",
   firstName: "Akshatha",
-  title: "First-Year Engineering Student",
+  initials: "AK",
+  profilePlaceholder: "AK",
+  profileImage: null as string | null,
+  title: "First-Year AI & ML Engineering Student",
   field: "Artificial Intelligence & Machine Learning",
   introduction:
-    "Hi! I'm Akshatha, an AI and Machine Learning engineering student at S.E.A. College of Engineering and Technology, Bengaluru. I'm curious about technology and enjoy learning new things, exploring ideas, and improving my skills. I'm excited to grow as a student, gain practical experience, and work on projects that help me turn my ideas into reality.",
+    "Hi! I'm Akshatha Kulkarni, an AI and Machine Learning engineering student at S.E.A. College of Engineering and Technology, Bengaluru. I'm curious about technology and enjoy learning new things, exploring ideas, and improving my skills. I'm excited to grow as a student, gain practical experience, and work on projects that help me turn my ideas into reality.",
   about: {
     introduction:
-      "I'm at the beginning of my engineering journey, discovering how technology can turn thoughtful ideas into useful things. I enjoy exploring new topics, asking questions, and taking things one step at a time.",
+      "I'm at the beginning of my engineering journey, discovering how technology can turn thoughtful ideas into useful things. I'm curious about artificial intelligence and machine learning, and enjoy programming, exploring new ideas, and improving a little at a time.",
     interests: [
       "Programming and problem-solving",
       "Artificial intelligence and machine learning",
-      "Web development and exploring new technology",
+      "Web development and exploring technology",
     ],
-    hobbies: "[Add your hobbies here]",
+    hobbies: [] as string[],
     aspiration:
-      "I hope to grow my technical skills, get hands-on experience, and eventually build projects that bring my ideas to life.",
+      "I hope to gain practical experience through projects and internships while continuing to learn, grow, and strengthen my skills.",
   },
   skills: [
     {
-      title: "Programming",
+      title: "Programming languages",
       description:
-        "A beginner, currently starting with Python and building my coding and problem-solving skills.",
-      items: ["Python · Learning"],
+        "Building a foundation in programming and problem-solving, one concept at a time.",
+      items: ["Python · Beginner / Currently learning"],
       mark: "01",
     },
     {
-      title: "Areas I’m exploring",
+      title: "Technologies I'm exploring",
       description:
-        "Learning the foundations and discovering how these areas can be put into practice.",
-      items: ["Artificial intelligence & machine learning", "Web development"],
+        "Areas I’m curious about and learning the fundamentals of.",
+      items: ["Artificial intelligence", "Machine learning", "Web development"],
       mark: "02",
     },
     {
-      title: "Tools I use",
+      title: "Tools",
       description:
-        "Tools that support my learning, coding practice, and day-to-day exploration.",
-      items: ["VS Code", "ChatGPT", "Claude AI"],
+        "Tools that support my learning, coding practice, and exploration.",
+      items: ["Visual Studio Code", "ChatGPT", "Claude AI"],
       mark: "03",
     },
   ],
   learning: [
     {
       number: "01",
-      title: "Getting started with Python",
+      title: "Starting with Python",
       description:
-        "Practising the basics of programming and building confidence one concept at a time.",
+        "Learning programming fundamentals and practising problem-solving as I build confidence.",
     },
     {
       number: "02",
-      title: "Exploring technology",
+      title: "Understanding the building blocks",
       description:
-        "Learning about AI, machine learning, and web development as I grow my technical foundation.",
+        "Exploring core coding concepts and finding ways to apply what I learn.",
     },
     {
       number: "03",
-      title: "Growing through practice",
+      title: "Exploring AI and machine learning",
       description:
-        "Working toward hands-on experience, stronger problem-solving skills, and new ideas to explore.",
+        "Getting familiar with introductory ideas in AI and machine learning.",
+    },
+    {
+      number: "04",
+      title: "Getting comfortable with developer tools",
+      description:
+        "Practising with tools that help me learn, write, and organize code.",
+    },
+    {
+      number: "05",
+      title: "Looking ahead",
+      description:
+        "Working towards practical projects, internship opportunities, and long-term growth.",
     },
   ],
   projects: [] as PortfolioProject[],
   education: {
     college: "S.E.A. College of Engineering and Technology",
     shortName: "SEACET",
-    location: "Bengaluru, Karnataka",
-    degree: "B.E.",
-    branch: "Artificial Intelligence & Machine Learning",
+    location: "Bengaluru, Karnataka, India",
+    degree: "Bachelor of Engineering (B.E.)",
+    branch: "Artificial Intelligence and Machine Learning (AI & ML)",
     year: "First Year",
     graduation: "2030",
   },
+  puc: {
+    college: "KSVK Pre university",
+    board: "Karnataka State Board",
+    course: "PCMB",
+    firstYear: {
+      label: "1st PUC",
+      marks: 557,
+      maximum: 600,
+    },
+    secondYear: {
+      label: "2nd PUC",
+      marks: 535,
+      maximum: 625,
+    },
+  },
+  certifications: [
+    { issuer: "Microsoft" },
+    { issuer: "Wadhwani Foundation" },
+  ] as PortfolioCertification[],
   contact: {
     email: "akshathakulkarni70@gmail.com",
-    linkedin: "https://www.linkedin.com/in/akshatha-kulkarni-b43bb0442/",
+    linkedin: "https://www.linkedin.com/in/akshatha-kulkarni-b43bb0442",
     github: "https://github.com/akshatha1365",
   },
 } as const;

@@ -1,10 +1,12 @@
 import { SiteHeader } from "@/components/site-header";
 import {
   AboutSection,
+  CertificationsSection,
   ContactSection,
   EducationSection,
   HeroSection,
   JourneySection,
+  PucSection,
   ProjectsSection,
   SiteFooter,
   SkillsSection,
@@ -24,6 +26,8 @@ export default function HomePage() {
         <JourneySection />
         <ProjectsSection />
         <EducationSection />
+        <PucSection />
+        <CertificationsSection />
         <ContactSection />
       </main>
       <SiteFooter />

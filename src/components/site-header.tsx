@@ -4,11 +4,15 @@ import { useState } from "react";
 import { portfolio } from "@/data/portfolio";
 
 const navigation = [
-  { label: "About", href: "#about" },
+  { label: "Home", href: "#home" },
+  { label: "About Me", href: "#about" },
   { label: "Skills", href: "#skills" },
-  { label: "Journey", href: "#journey" },
+  { label: "Learning Journey", href: "#journey" },
   { label: "Projects", href: "#projects" },
   { label: "Education", href: "#education" },
+  { label: "PUC Results", href: "#puc" },
+  { label: "Certifications", href: "#certifications" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function SiteHeader() {
@@ -23,8 +27,8 @@ export function SiteHeader() {
           href="#home"
           onClick={() => setMenuOpen(false)}
         >
-          <span className="wordmark__mark">a.</span>
-          <span>{portfolio.firstName.toLowerCase()}</span>
+          <span className="wordmark__mark">AK</span>
+          <span>{portfolio.name}</span>
         </a>
 
         <button

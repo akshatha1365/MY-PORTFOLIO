@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { portfolio } from "@/data/portfolio";
 
 function SectionHeading({
@@ -50,18 +51,16 @@ export function HeroSection() {
       <div className="hero__copy">
         <p className="eyebrow hero__eyebrow">
           <span className="availability-dot" />
-          First-year student · Bengaluru, Karnataka
+          Exploring <span aria-hidden="true">·</span> Learning{" "}
+          <span aria-hidden="true">·</span> Building
         </p>
         <h1 className="hero__title" id="hero-title">
-          A curious mind,
+          Akshatha
           <br />
-          <span>just getting</span>
-          <br />
-          <span className="hero__title-accent">started.</span>
+          <span className="hero__title-accent">Kulkarni.</span>
         </h1>
+        <p className="hero__motto">Learning today. Building tomorrow.</p>
         <p className="hero__name">
-          I’m <strong>{portfolio.name}</strong>
-          <span className="hero__divider">/</span>
           {portfolio.title}
         </p>
         <p className="hero__intro">{portfolio.introduction}</p>
@@ -76,24 +75,39 @@ export function HeroSection() {
       </div>
 
       <div
-        aria-label="Profile photo placeholder; add your photo at public/profile.jpg"
+        aria-label={
+          portfolio.profileImage
+            ? `${portfolio.name}'s profile photo`
+            : `Profile photo placeholder with the initials ${portfolio.profilePlaceholder}`
+        }
         className="hero-art"
         role="img"
       >
         <div className="hero-art__orbit hero-art__orbit--outer" />
         <div className="hero-art__orbit hero-art__orbit--inner" />
         <div className="hero-art__sun" />
-        <div className="hero-art__card">
-          <span className="hero-art__card-label">CURRENTLY</span>
-          <span className="hero-art__card-title">learning to make</span>
-          <span className="hero-art__card-accent">things that matter.</span>
-          <span aria-hidden="true" className="hero-art__sparkle">
-            ✳
-          </span>
+        <div className="hero-art__portrait">
+          {portfolio.profileImage ? (
+            <Image
+              alt=""
+              className="hero-art__photo"
+              fill
+              priority
+              sizes="(max-width: 680px) 60vw, 30vw"
+              src={portfolio.profileImage}
+            />
+          ) : (
+            <>
+              <span className="hero-art__portrait-initials">
+                {portfolio.profilePlaceholder}
+              </span>
+              <span className="hero-art__portrait-label">YOUR PHOTO HERE</span>
+            </>
+          )}
         </div>
         <div className="hero-art__caption">
-          <span className="hero-art__caption-mark">a.</span>
-          <span>Add your photo when you’re ready</span>
+          <span className="hero-art__caption-mark">{portfolio.initials}</span>
+          <span>Curiosity in progress</span>
         </div>
         <span aria-hidden="true" className="hero-art__asterisk">
           ✳
@@ -143,7 +157,11 @@ export function AboutSection() {
           </div>
           <div className="about-detail">
             <span className="detail-label">OUTSIDE THE CLASSROOM</span>
-            <p>{portfolio.about.hobbies}</p>
+            <p>
+              {portfolio.about.hobbies.length > 0
+                ? portfolio.about.hobbies.join(", ")
+                : "Add your personal interests here when you’re ready."}
+            </p>
           </div>
           <div className="about-detail">
             <span className="detail-label">LOOKING AHEAD</span>
@@ -256,28 +274,7 @@ export function ProjectsSection() {
       {portfolio.projects.length > 0 ? (
         <div className="projects-grid">
           {portfolio.projects.map((project) => (
-            <article className="project-card" key={project.title}>
-              <span aria-hidden="true" className="project-card__mark">
-                ✳
-              </span>
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
-              <ul aria-label="Technologies used" className="project-card__tags">
-                {project.technologies.map((technology) => (
-                  <li key={technology}>{technology}</li>
-                ))}
-              </ul>
-              {project.href ? (
-                <a
-                  className="inline-link"
-                  href={project.href}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  View project <ArrowIcon />
-                </a>
-              ) : null}
-            </article>
+            <ProjectCard key={project.title} project={project} />
           ))}
         </div>
       ) : (
@@ -305,6 +302,66 @@ export function ProjectsSection() {
   );
 }
 
+function ProjectCard({
+  project,
+}: {
+  project: (typeof portfolio.projects)[number];
+}) {
+  return (
+    <article className="project-card">
+      {project.image ? (
+        <div className="project-card__image">
+          <Image
+            alt={`${project.title} project preview`}
+            fill
+            sizes="(max-width: 680px) 100vw, (max-width: 900px) 50vw, 33vw"
+            src={project.image}
+          />
+        </div>
+      ) : null}
+      <div className="project-card__top">
+        <span aria-hidden="true" className="project-card__mark">
+          ✳
+        </span>
+        {project.status ? (
+          <span className="project-card__status">{project.status}</span>
+        ) : null}
+      </div>
+      <h3>{project.title}</h3>
+      <p>{project.description}</p>
+      {project.technologies.length > 0 ? (
+        <ul aria-label="Technologies used" className="project-card__tags">
+          {project.technologies.map((technology) => (
+            <li key={technology}>{technology}</li>
+          ))}
+        </ul>
+      ) : null}
+      <div className="project-card__links">
+        {project.githubHref ? (
+          <a
+            className="inline-link"
+            href={project.githubHref}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            GitHub <ArrowIcon />
+          </a>
+        ) : null}
+        {project.demoHref ? (
+          <a
+            className="inline-link"
+            href={project.demoHref}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Live demo <ArrowIcon />
+          </a>
+        ) : null}
+      </div>
+    </article>
+  );
+}
+
 export function EducationSection() {
   return (
     <section
@@ -318,27 +375,163 @@ export function EducationSection() {
         number="05"
         title="My education."
       />
-      <article className="education-card">
-        <div className="education-card__seal" aria-hidden="true">
-          <span>SE</span>
-          <span>COLLEGE</span>
+      <div className="education-list">
+        <article className="education-card">
+          <div className="education-card__seal" aria-hidden="true">
+            <span>SEA</span>
+            <span>COLLEGE</span>
+          </div>
+          <div className="education-card__main">
+            <p className="education-card__eyebrow">
+              {portfolio.education.shortName} <span>·</span> {portfolio.education.location}
+            </p>
+            <h3>{portfolio.education.college}</h3>
+            <p>
+              {portfolio.education.degree} in {portfolio.education.branch}
+            </p>
+          </div>
+          <div className="education-card__status">
+            <span className="education-card__year">{portfolio.education.year}</span>
+            <span className="education-card__expected">
+              Expected graduation <strong>{portfolio.education.graduation}</strong>
+            </span>
+          </div>
+        </article>
+      </div>
+    </section>
+  );
+}
+
+export function PucSection() {
+  return (
+    <section
+      aria-labelledby="puc-title"
+      className="section-wrap section section--soft section--puc"
+      id="puc"
+    >
+      <div className="puc-heading">
+        <SectionHeading
+          eyebrow="Pre-university education"
+          id="puc-title"
+          number="06"
+          title="My PUC results."
+        />
+        <p className="puc-heading__intro">
+          {portfolio.puc.board} <span aria-hidden="true">·</span>{" "}
+          {portfolio.puc.course}
+        </p>
+      </div>
+      <div className="puc-card">
+        <div className="puc-card__college">
+          <span className="puc-card__label">PUC COLLEGE</span>
+          <h3>{portfolio.puc.college}</h3>
         </div>
-        <div className="education-card__main">
-          <p className="education-card__eyebrow">
-            {portfolio.education.shortName} <span>·</span> {portfolio.education.location}
-          </p>
-          <h3>{portfolio.education.college}</h3>
-          <p>
-            {portfolio.education.degree} in {portfolio.education.branch}
-          </p>
+        <div className="puc-results">
+          {[portfolio.puc.firstYear, portfolio.puc.secondYear].map((year) => (
+            <article className="puc-result" key={year.label}>
+              <span className="puc-card__label">{year.label}</span>
+              <strong>
+                {year.marks} <span>/ {year.maximum}</span>
+              </strong>
+              <span className="puc-result__percentage">
+                {((year.marks / year.maximum) * 100).toFixed(2)}%
+              </span>
+              <span className="puc-result__distinction">Distinction</span>
+            </article>
+          ))}
         </div>
-        <div className="education-card__status">
-          <span className="education-card__year">{portfolio.education.year}</span>
-          <span className="education-card__expected">
-            EXPECTED GRADUATION <strong>{portfolio.education.graduation}</strong>
+      </div>
+    </section>
+  );
+}
+
+export function CertificationsSection() {
+  return (
+    <section
+      aria-labelledby="certifications-title"
+      className="section-wrap section section--certifications"
+      id="certifications"
+    >
+      <SectionHeading
+        eyebrow="Learning milestones"
+        id="certifications-title"
+        number="07"
+        title="Certifications."
+      />
+      {portfolio.certifications.length > 0 ? (
+        <div className="certifications-grid">
+          {portfolio.certifications.map((certification) => (
+            <article className="certification-card" key={certification.issuer}>
+              {certification.image ? (
+                <div className="certification-card__preview">
+                  <Image
+                    alt={`${certification.title ?? certification.issuer} certificate preview`}
+                    fill
+                    sizes="(max-width: 680px) 100vw, (max-width: 900px) 50vw, 33vw"
+                    src={certification.image}
+                  />
+                </div>
+              ) : (
+                <span
+                  aria-hidden="true"
+                  className="certification-card__mark"
+                >
+                  ✳
+                </span>
+              )}
+              <span className="certification-card__issuer">
+                {certification.issuer}
+              </span>
+              <h3>
+                {certification.title ?? "Certificate details coming soon"}
+              </h3>
+              {!certification.title ? (
+                <p className="certification-card__placeholder">
+                  Add the certificate name and image when they’re available.
+                </p>
+              ) : null}
+              {certification.completedAt ? (
+                <span className="certification-card__year">
+                  {certification.completedAt}
+                </span>
+              ) : null}
+              {certification.certificateUrl || certification.image ? (
+                <a
+                  className="inline-link"
+                  href={certification.certificateUrl ?? certification.image}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  View certificate <ArrowIcon />
+                </a>
+              ) : null}
+              {certification.credentialUrl ? (
+                <a
+                  className="inline-link"
+                  href={certification.credentialUrl}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Verify credential <ArrowIcon />
+                </a>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="certifications-empty">
+          <span aria-hidden="true" className="certifications-empty__mark">
+            ✳
           </span>
+          <div>
+            <h3>Every new skill starts with curiosity.</h3>
+            <p>
+              I’m building my foundations now. As I complete courses and earn
+              certifications, I’ll share them here.
+            </p>
+          </div>
         </div>
-      </article>
+      )}
     </section>
   );
 }
@@ -352,43 +545,59 @@ export function ContactSection() {
     >
       <div className="section-wrap contact-section__inner">
         <div>
-          <p className="eyebrow contact-section__eyebrow">Have a good one in mind?</p>
+          <p className="eyebrow contact-section__eyebrow">
+            Have an idea or an interesting problem?
+          </p>
           <h2 id="contact-title">
-            Let’s start a
+            Let’s
             <br />
-            <span>conversation.</span>
+            <span>connect.</span>
           </h2>
           <p className="contact-section__copy">
-            I’m always happy to connect, learn, and talk about ideas.
+            I’d love to hear what you’re curious about, the ideas you’re
+            exploring, or a problem you’d like to solve.
           </p>
           <a className="button button--light" href={`mailto:${portfolio.contact.email}`}>
-            Send me an email <ArrowIcon />
+            Tell me about it <ArrowIcon />
           </a>
         </div>
         <div className="contact-links">
           <a href={`mailto:${portfolio.contact.email}`}>
+            <span className="contact-links__icon" aria-hidden="true">
+              @
+            </span>
             <span className="contact-links__label">EMAIL</span>
             <span className="contact-links__value">{portfolio.contact.email}</span>
             <ArrowIcon />
           </a>
-          <a
-            href={portfolio.contact.linkedin}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span className="contact-links__label">LINKEDIN</span>
-            <span className="contact-links__value">Say hello on LinkedIn</span>
-            <ArrowIcon />
-          </a>
-          <a
-            href={portfolio.contact.github}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span className="contact-links__label">GITHUB</span>
-            <span className="contact-links__value">Find me on GitHub</span>
-            <ArrowIcon />
-          </a>
+          {portfolio.contact.linkedin ? (
+            <a
+              href={portfolio.contact.linkedin}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <span className="contact-links__icon" aria-hidden="true">
+                in
+              </span>
+              <span className="contact-links__label">LINKEDIN</span>
+              <span className="contact-links__value">Say hello on LinkedIn</span>
+              <ArrowIcon />
+            </a>
+          ) : null}
+          {portfolio.contact.github ? (
+            <a
+              href={portfolio.contact.github}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              <span className="contact-links__icon" aria-hidden="true">
+                &lt;/&gt;
+              </span>
+              <span className="contact-links__label">GITHUB</span>
+              <span className="contact-links__value">Find me on GitHub</span>
+              <ArrowIcon />
+            </a>
+          ) : null}
         </div>
         <span aria-hidden="true" className="contact-section__sparkle">
           ✳
@@ -399,16 +608,55 @@ export function ContactSection() {
 }
 
 export function SiteFooter() {
+  const footerLinks = [
+    { label: "Home", href: "#home" },
+    { label: "About", href: "#about" },
+    { label: "Skills", href: "#skills" },
+    { label: "Journey", href: "#journey" },
+    { label: "Projects", href: "#projects" },
+    { label: "Education", href: "#education" },
+    { label: "PUC Results", href: "#puc" },
+    { label: "Certificates", href: "#certifications" },
+    { label: "Contact", href: "#contact" },
+  ];
+  const socialLinks = [
+    portfolio.contact.linkedin
+      ? { label: "LinkedIn", href: portfolio.contact.linkedin }
+      : null,
+    portfolio.contact.github
+      ? { label: "GitHub", href: portfolio.contact.github }
+      : null,
+  ].filter((link) => link !== null);
+
   return (
     <footer className="site-footer">
       <div className="section-wrap site-footer__inner">
         <a className="wordmark wordmark--footer" href="#home">
-          <span className="wordmark__mark">a.</span>
+          <span className="wordmark__mark">AK</span>
           <span>{portfolio.name}</span>
         </a>
-        <p>Learning, growing, and figuring it out — one day at a time.</p>
+        <p>Learning, growing and exploring technology.</p>
+        <nav aria-label="Footer navigation" className="site-footer__links">
+          {footerLinks.map((link) => (
+            <a href={link.href} key={link.href}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
+        <nav aria-label="Social links" className="site-footer__socials">
+          {socialLinks.map((link) => (
+            <a
+              href={link.href}
+              key={link.href}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {link.label} ↗
+            </a>
+          ))}
+        </nav>
         <a className="site-footer__top" href="#home">
-          Back to top ↑
+          © {new Date().getFullYear()} · Back to top ↑
         </a>
       </div>
     </footer>
